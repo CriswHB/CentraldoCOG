@@ -246,6 +246,7 @@
 
         .content {
             padding: 40px;
+            position: relative;
         }
 
         /* MÊS DESTACADO COM ANIMAÇÃO SINCRONIZADA */
@@ -402,10 +403,21 @@
             text-transform: uppercase;
             position: relative;
             transition: all 0.3s ease;
+            animation: thPulse var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes thPulse {
+            0%, 100% { 
+                background: linear-gradient(to bottom, #1a4d1a, #2d5a2d);
+            }
+            50% { 
+                background: linear-gradient(to bottom, #2d5a2d, #1a4d1a);
+            }
         }
 
         th:hover {
             background: linear-gradient(to bottom, #2d5a2d, #1a4d1a);
+            transform: scale(1.02);
         }
 
         th::after {
@@ -432,6 +444,7 @@
             background: rgba(255, 255, 255, 0.95);
             color: #2c3e50;
             position: relative;
+            vertical-align: middle;
         }
 
         tr:nth-child(even) td {
@@ -444,51 +457,49 @@
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
         }
 
+        /* FUNÇÕES CENTRALIZADAS */
         .function-cell {
             color: #2c3e50;
             font-weight: 600;
-            text-align: left;
+            text-align: center;
         }
 
-        .nickname {
+        /* CORREÇÃO DA COR DE FUNDO DOS PRAZOS - APENAS A COR FOI ALTERADA */
+        .nickname, .deadline {
             color: #2c3e50;
             font-weight: 600;
             padding: 6px 0;
-            display: inline-block;
+            display: block;
             transition: all 0.3s ease;
             font-size: 0.95rem;
+            width: 100%;
+            text-align: center;
+            /* APENAS A COR DE FUNDO FOI CORRIGIDA - MESMA COR DAS CÉLULAS */
+            background: inherit !important;
+            border: none !important;
+            box-shadow: none !important;
+            margin: 0;
+            line-height: 1.4;
         }
 
-        tr:hover .nickname {
-            color: #1a4d1a;
-            transform: scale(1.05);
-            font-weight: 700;
-        }
-
-        .deadline {
-            color: #2c3e50;
-            font-weight: 600;
-            padding: 6px 0;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
-
+        tr:hover .nickname,
         tr:hover .deadline {
             color: #1a4d1a;
             transform: scale(1.05);
             font-weight: 700;
+            background: inherit !important;
         }
 
+        /* BOTÃO DE LINKS EM POSIÇÃO MAIS ACESSÍVEL */
         .links-section {
-            margin-top: 50px;
+            margin-top: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            position: relative;
         }
 
-        /* BOTÃO DE LINKS COM ANIMAÇÃO SINCRONIZADA */
         .links-toggle {
             width: 80px;
             height: 80px;
@@ -657,6 +668,13 @@
             text-decoration: underline;
         }
 
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
         footer {
             padding: 25px;
             text-align: center;
@@ -664,16 +682,13 @@
             font-weight: 600;
         }
 
-        footer p {
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-            color: white;
-            animation: footerGlow var(--animation-duration) ease-in-out infinite;
-        }
-
+        /* CRÉDITOS SIMPLIFICADOS */
         .credits {
             margin-top: 10px;
             font-size: 0.9rem;
             opacity: 0.8;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes footerGlow {
@@ -743,7 +758,7 @@
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="content">
             <div class="month-display">
-                <i class="far fa-calendar-alt"></i> Mês: Novembro 2025
+                <i class="far fa-calendar-alt"></i> <span id="monthDisplay">Carregando mês...</span>
             </div>
             
             <div class="tables-container">
@@ -759,96 +774,153 @@
                                 <th>Prazo</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="functionsTableBody">
                             <tr>
-                                <td class="function-cell">Desenvolvimento da Feature X</td>
-                                <td><span class="nickname">@anasilva</span></td>
-                                <td class="deadline">15/11/2025</td>
-                            </tr>
-                            <tr>
-                                <td class="function-cell">Refatoração do Módulo Y</td>
-                                <td><span class="nickname">@carlosm</span></td>
-                                <td class="deadline">10/11/2025</td>
-                            </tr>
-                            <tr>
-                                <td class="function-cell">Testes de Integração</td>
-                                <td><span class="nickname">@marianac</span></td>
-                                <td class="deadline">20/11/2025</td>
-                            </tr>
-                            <tr>
-                                <td class="function-cell">Documentação Técnica</td>
-                                <td><span class="nickname">@robertoa</span></td>
-                                <td class="deadline">25/11/2025</td>
-                            </tr>
-                            <tr>
-                                <td class="function-cell">Revisão de Código</td>
-                                <td><span class="nickname">@brunoc</span></td>
-                                <td class="deadline">12/11/2025</td>
+                                <td colspan="3" class="loading">Carregando dados da planilha...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             
+            <!-- BOTÃO DE LINKS EM POSIÇÃO MAIS ACESSÍVEL -->
             <div class="links-section">
                 <div class="links-toggle" onclick="toggleLinks()">
                     <span>🔗</span>
                 </div>
 
                 <div id="linksContent">
-                    <div class="links-grid">
-                        <div class="link-card">
-                            <div class="link-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3>Documentação</h3>
-                                <a href="https://docs.google.com" target="_blank">docs.projeto.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="link-card">
-                            <div class="link-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3>Repositório</h3>
-                                <a href="https://github.com" target="_blank">github.com/empresa</a>
-                            </div>
-                        </div>
-                        
-                        <div class="link-card">
-                            <div class="link-icon">
-                                <i class="fas fa-calendar"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3>Calendário</h3>
-                                <a href="https://calendar.google.com" target="_blank">calendar.empresa.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="link-card">
-                            <div class="link-icon">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3>Comunicação</h3>
-                                <a href="https://slack.com" target="_blank">teams.empresa.com</a>
-                            </div>
-                        </div>
+                    <div class="links-grid" id="linksGrid">
+                        <div class="loading">Carregando links úteis...</div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- RODAPÉ COM CRÉDITOS -->
+        <!-- RODAPÉ COM CRÉDITOS SIMPLIFICADOS -->
         <footer>
-            <p>Central do COG &copy; 2025 - Departamento de Capacitação Militar</p>
             <p class="credits">&lt;/&gt; Desenvolvido por Crisw inspirado no html de Pegas</p>
         </footer>
     </div>
 
     <script>
+        // Configurações da API do Google Sheets
+        const API_KEY = 'AIzaSyAy3Y92FeugfXZumam8nQTchPUBGXcz6mc';
+        const SPREADSHEET_ID = '1_sk2r8r6ndwHFq78sbfaNGCdtngQStczbGzk-GPTE9I';
+        
+        // Função para buscar dados da planilha
+        async function fetchSheetData() {
+            try {
+                // Buscar o mês (E8)
+                const monthResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/E8?key=${API_KEY}`);
+                const monthData = await monthResponse.json();
+                
+                if (monthData.values && monthData.values[0]) {
+                    document.getElementById('monthDisplay').textContent = `Mês: ${monthData.values[0][0]}`;
+                }
+
+                // Buscar funções (E13:E21)
+                const functionsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/E13:E21?key=${API_KEY}`);
+                const functionsData = await functionsResponse.json();
+
+                // Buscar nicks (G13:G21)
+                const nicksResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/G13:G21?key=${API_KEY}`);
+                const nicksData = await nicksResponse.json();
+
+                // Buscar prazos (H13:H21)
+                const deadlinesResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/H13:H21?key=${API_KEY}`);
+                const deadlinesData = await deadlinesResponse.json();
+
+                // Buscar links úteis
+                const linksResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/B13:B17,K13:K17?key=${API_KEY}`);
+                const linksData = await linksResponse.json();
+
+                // Processar e exibir os dados
+                updateFunctionsTable(functionsData.values || [], nicksData.values || [], deadlinesData.values || []);
+                updateLinks(linksData.values || []);
+                
+            } catch (error) {
+                console.error('Erro ao buscar dados da planilha:', error);
+                document.getElementById('functionsTableBody').innerHTML = '<tr><td colspan="3" class="loading">Erro ao carregar dados</td></tr>';
+                document.getElementById('linksGrid').innerHTML = '<div class="loading">Erro ao carregar links</div>';
+            }
+        }
+
+        // Função para atualizar a tabela de funções
+        function updateFunctionsTable(functions, nicks, deadlines) {
+            const tableBody = document.getElementById('functionsTableBody');
+            tableBody.innerHTML = '';
+
+            if (functions.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" class="loading">Nenhum dado encontrado</td></tr>';
+                return;
+            }
+
+            for (let i = 0; i < functions.length; i++) {
+                const functionName = functions[i] && functions[i][0] ? functions[i][0] : '';
+                const nick = nicks[i] && nicks[i][0] ? nicks[i][0] : '';
+                const deadline = deadlines[i] && deadlines[i][0] ? deadlines[i][0] : '';
+
+                // Só adiciona linha se houver pelo menos uma função
+                if (functionName.trim()) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="function-cell">${functionName}</td>
+                        <td><span class="nickname">${nick}</span></td>
+                        <td><span class="deadline">${deadline}</span></td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            }
+        }
+
+        // Função para atualizar os links úteis
+        function updateLinks(linksData) {
+            const linksGrid = document.getElementById('linksGrid');
+            linksGrid.innerHTML = '';
+
+            if (!linksData || linksData.length < 10) {
+                linksGrid.innerHTML = '<div class="loading">Links não disponíveis</div>';
+                return;
+            }
+
+            // Estrutura dos links na planilha:
+            // B13: Nome do link 1 | B14: URL do link 1
+            // B16: Nome do link 2 | B17: URL do link 2
+            // K13: Nome do link 3 | K14: URL do link 3
+            // K16: Nome do link 4 | K17: URL do link 4
+
+            const links = [
+                { name: linksData[0] && linksData[0][0] ? linksData[0][0] : 'Link 1', url: linksData[1] && linksData[1][0] ? linksData[1][0] : '#' },
+                { name: linksData[2] && linksData[2][0] ? linksData[2][0] : 'Link 2', url: linksData[3] && linksData[3][0] ? linksData[3][0] : '#' },
+                { name: linksData[5] && linksData[5][0] ? linksData[5][0] : 'Link 3', url: linksData[6] && linksData[6][0] ? linksData[6][0] : '#' },
+                { name: linksData[7] && linksData[7][0] ? linksData[7][0] : 'Link 4', url: linksData[8] && linksData[8][0] ? linksData[8][0] : '#' }
+            ];
+
+            const icons = ['fa-book', 'fa-github', 'fa-calendar', 'fa-comments'];
+
+            links.forEach((link, index) => {
+                if (link.name && link.url && link.url !== '#') {
+                    const linkCard = document.createElement('div');
+                    linkCard.className = 'link-card';
+                    linkCard.innerHTML = `
+                        <div class="link-icon">
+                            <i class="fas ${icons[index]}"></i>
+                        </div>
+                        <div class="link-content">
+                            <h3>${link.name}</h3>
+                            <a href="${link.url}" target="_blank">${new URL(link.url).hostname}</a>
+                        </div>
+                    `;
+                    linksGrid.appendChild(linkCard);
+                }
+            });
+
+            if (linksGrid.children.length === 0) {
+                linksGrid.innerHTML = '<div class="loading">Nenhum link disponível</div>';
+            }
+        }
+
         function toggleLinks() {
             var linksDiv = document.getElementById('linksContent');
             var toggleBtn = document.querySelector('.links-toggle');
@@ -876,6 +948,9 @@
             };
 
             setTimeout(restartAnimations, 100);
+            
+            // Carregar dados da planilha
+            fetchSheetData();
         });
     </script>
 </body>
