@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central do COG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --dark-green: #006400;
+            --medium-green: #008000;
+            --light-green: #e8f5e8;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #f5f7fa;
+            --white: #ffffff;
+            --accent: #27ae60;
+            --header-green: #1a4d1a;
+            --animation-duration: 8s;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(-45deg, 
+                #006400, /* Verde escuro */
+                #2c3e50, /* Cinza escuro */
+                #7f8c8d, /* Cinza médio */
+                #f5f7fa, /* Cinza claro */
+                #ffffff, /* Branco */
+                #008000, /* Verde médio */
+                #e8f5e8  /* Verde claro */
+            );
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        /* ANIMAÇÃO MELHORADA - APENAS FAIXA VERDE TROPA E BRILHO SUAVE */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(26, 77, 26, 0.95), 
+                rgba(39, 174, 96, 0.85)
+            );
+            z-index: 1;
+        }
+
+        /* FAIXA VERDE TROPA MELHORADA */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                rgba(39, 174, 96, 0.4), 
+                rgba(255, 255, 255, 0.15), 
+                transparent
+            );
+            animation: troopPass var(--animation-duration) ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes troopPass {
+            0% {
+                left: -100%;
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.8;
+            }
+            85% {
+                opacity: 0.8;
+            }
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* BRILHO SUAVE NO FUNDO */
+        .shine-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                circle at 30% 50%,
+                rgba(39, 174, 96, 0.2) 0%,
+                transparent 50%
+            );
+            animation: shineMove var(--animation-duration) ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes shineMove {
+            0%, 100% {
+                transform: translateX(-20%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(20%) scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        .container > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .header-image {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(1.2) contrast(1.3) saturate(1.4);
+            opacity: 0.9;
+            animation: imageFloat var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+                filter: brightness(1.2) contrast(1.3) saturate(1.4);
+            }
+            25% { 
+                transform: translateY(-3px) rotate(1deg);
+                filter: brightness(1.3) contrast(1.4) saturate(1.5);
+            }
+            50% { 
+                transform: translateY(0px) rotate(0deg);
+                filter: brightness(1.2) contrast(1.3) saturate(1.4);
+            }
+            75% { 
+                transform: translateY(3px) rotate(-1deg);
+                filter: brightness(1.3) contrast(1.4) saturate(1.5);
+            }
+        }
+
+        .header-content {
+            text-align: center;
+            animation: textGlow var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                             0 0 40px rgba(39, 174, 96, 0.2);
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+                             0 0 60px rgba(39, 174, 96, 0.4),
+                             0 0 80px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: titlePulse var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { 
+                transform: scale(1);
+                letter-spacing: 3px;
+            }
+            50% { 
+                transform: scale(1.05);
+                letter-spacing: 4px;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: white;
+            animation: subtitleSlide var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes subtitleSlide {
+            0%, 100% { 
+                transform: translateX(0);
+                letter-spacing: 2px;
+            }
+            50% { 
+                transform: translateX(5px);
+                letter-spacing: 3px;
+            }
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        /* MÊS DESTACADO COM ANIMAÇÃO SINCRONIZADA */
+        .month-display {
+            font-size: 2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            animation: monthGlow var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes monthGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 8px 25px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+            50% { 
+                box-shadow: 
+                    0 8px 25px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                    0 0 20px rgba(39, 174, 96, 0.3);
+                border-color: rgba(39, 174, 96, 0.5);
+            }
+        }
+
+        .month-display i {
+            margin-right: 15px;
+            font-size: 1.8rem;
+            color: var(--accent);
+            animation: iconPulse var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .tables-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* TABELA COM ANIMAÇÃO SINCRONIZADA */
+        .table-wrapper {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                0 0 0 1px rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            animation: tableFloat var(--animation-duration) ease-in-out infinite;
+            position: relative;
+        }
+
+        .table-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #1a4d1a, 
+                var(--accent), 
+                #1a4d1a
+            );
+            z-index: 3;
+        }
+
+        @keyframes tableFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1a4d1a, #2d5a2d);
+            color: white;
+            padding: 25px 30px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: headerGlow var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { 
+                background: linear-gradient(135deg, #1a4d1a, #2d5a2d);
+            }
+            50% { 
+                background: linear-gradient(135deg, #2d5a2d, #1a4d1a);
+            }
+        }
+
+        .table-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+
+        .table-header:hover::before {
+            left: 100%;
+        }
+
+        .table-header i {
+            margin-right: 15px;
+            font-size: 1.6rem;
+            animation: iconBounce var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            position: relative;
+        }
+
+        th {
+            background: linear-gradient(to bottom, #1a4d1a, #2d5a2d);
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 3px solid var(--accent);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        th:hover {
+            background: linear-gradient(to bottom, #2d5a2d, #1a4d1a);
+        }
+
+        th::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--accent), 
+                transparent
+            );
+            opacity: 0.7;
+        }
+
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(236, 240, 241, 0.8);
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            position: relative;
+        }
+
+        tr:nth-child(even) td {
+            background: rgba(248, 250, 252, 0.98);
+        }
+
+        tr:hover td {
+            background: linear-gradient(135deg, rgba(236, 240, 241, 0.9), rgba(228, 233, 237, 0.9));
+            transform: translateX(3px);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .function-cell {
+            color: #2c3e50;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .nickname {
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 6px 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        tr:hover .nickname {
+            color: #1a4d1a;
+            transform: scale(1.05);
+            font-weight: 700;
+        }
+
+        .deadline {
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 6px 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        tr:hover .deadline {
+            color: #1a4d1a;
+            transform: scale(1.05);
+            font-weight: 700;
+        }
+
+        .links-section {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* BOTÃO DE LINKS COM ANIMAÇÃO SINCRONIZADA */
+        .links-toggle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--medium-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(39, 174, 96, 0.5);
+            transition: all 0.4s ease;
+            animation: linkFloat var(--animation-duration) ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .links-toggle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: linkShine var(--animation-duration) ease-in-out infinite;
+        }
+
+        @keyframes linkFloat {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                box-shadow: 
+                    0 10px 30px rgba(0, 0, 0, 0.4),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(39, 174, 96, 0.5);
+            }
+            50% { 
+                transform: translateY(-8px) scale(1.05);
+                box-shadow: 
+                    0 15px 40px rgba(0, 0, 0, 0.5),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(39, 174, 96, 0.7);
+            }
+        }
+
+        @keyframes linkShine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .links-toggle:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.7),
+                0 0 40px rgba(39, 174, 96, 0.8);
+            animation: none;
+        }
+
+        .links-toggle span {
+            font-size: 2rem;
+            color: var(--white);
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #linksContent {
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            width: 100%;
+            max-width: 900px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        #linksContent.show {
+            max-height: 500px;
+            padding: 25px;
+            display: block;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .link-card {
+            background: rgba(245, 247, 250, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .link-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--medium-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover .link-icon {
+            transform: scale(1.1);
+        }
+
+        .link-content h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .link-content a {
+            color: #5D8AA8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .link-content a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        footer p {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            color: white;
+            animation: footerGlow var(--animation-duration) ease-in-out infinite;
+        }
+
+        .credits {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { 
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            }
+            50% { 
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5),
+                            0 0 10px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .header-image {
+                height: 60px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                padding: 25px;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-header {
+                font-size: 1.4rem;
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 15px 12px;
+            }
+            
+            .month-display {
+                font-size: 1.6rem;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- EFEITO DE BRILHO ADICIONAL -->
+        <div class="shine-effect"></div>
+        
+        <!-- CABEÇALHO -->
+        <header>
+            <img src="https://i.imgur.com/YOQkMIQ.png" alt="Emblema COG" class="header-image left">
+            <div class="header-content">
+                <h1>Central do COG</h1>
+                <p class="subtitle">Departamento de Capacitação Militar</p>
+            </div>
+            <img src="https://i.imgur.com/YOQkMIQ.png" alt="Emblema COG" class="header-image right">
+        </header>
+        
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div class="content">
+            <div class="month-display">
+                <i class="far fa-calendar-alt"></i> Mês: Novembro 2025
+            </div>
+            
+            <div class="tables-container">
+                <div class="table-wrapper">
+                    <div class="table-header">
+                        <i class="fas fa-code"></i> Escala de Funções
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Função</th>
+                                <th>Nick</th>
+                                <th>Prazo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="function-cell">Desenvolvimento da Feature X</td>
+                                <td><span class="nickname">@anasilva</span></td>
+                                <td class="deadline">15/11/2025</td>
+                            </tr>
+                            <tr>
+                                <td class="function-cell">Refatoração do Módulo Y</td>
+                                <td><span class="nickname">@carlosm</span></td>
+                                <td class="deadline">10/11/2025</td>
+                            </tr>
+                            <tr>
+                                <td class="function-cell">Testes de Integração</td>
+                                <td><span class="nickname">@marianac</span></td>
+                                <td class="deadline">20/11/2025</td>
+                            </tr>
+                            <tr>
+                                <td class="function-cell">Documentação Técnica</td>
+                                <td><span class="nickname">@robertoa</span></td>
+                                <td class="deadline">25/11/2025</td>
+                            </tr>
+                            <tr>
+                                <td class="function-cell">Revisão de Código</td>
+                                <td><span class="nickname">@brunoc</span></td>
+                                <td class="deadline">12/11/2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-toggle" onclick="toggleLinks()">
+                    <span>🔗</span>
+                </div>
+
+                <div id="linksContent">
+                    <div class="links-grid">
+                        <div class="link-card">
+                            <div class="link-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3>Documentação</h3>
+                                <a href="https://docs.google.com" target="_blank">docs.projeto.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="link-card">
+                            <div class="link-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3>Repositório</h3>
+                                <a href="https://github.com" target="_blank">github.com/empresa</a>
+                            </div>
+                        </div>
+                        
+                        <div class="link-card">
+                            <div class="link-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3>Calendário</h3>
+                                <a href="https://calendar.google.com" target="_blank">calendar.empresa.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="link-card">
+                            <div class="link-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3>Comunicação</h3>
+                                <a href="https://slack.com" target="_blank">teams.empresa.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RODAPÉ COM CRÉDITOS -->
+        <footer>
+            <p>Central do COG &copy; 2025 - Departamento de Capacitação Militar</p>
+            <p class="credits">&lt;/&gt; Desenvolvido por Crisw inspirado no html de Pegas</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleLinks() {
+            var linksDiv = document.getElementById('linksContent');
+            var toggleBtn = document.querySelector('.links-toggle');
+            
+            if (linksDiv.classList.contains('show')) {
+                linksDiv.classList.remove('show');
+            } else {
+                linksDiv.classList.add('show');
+                toggleBtn.style.transform = 'scale(1.1) rotate(360deg)';
+            }
+        }
+
+        // Sincronizar todas as animações
+        document.addEventListener('DOMContentLoaded', function() {
+            const restartAnimations = () => {
+                const animatedElements = document.querySelectorAll('*');
+                animatedElements.forEach(el => {
+                    if (el.style.animation) {
+                        const animation = el.style.animation;
+                        el.style.animation = 'none';
+                        void el.offsetWidth;
+                        el.style.animation = animation;
+                    }
+                });
+            };
+
+            setTimeout(restartAnimations, 100);
+        });
+    </script>
+</body>
+</html>
