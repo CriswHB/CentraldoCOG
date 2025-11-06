@@ -397,7 +397,7 @@
             width: 100%;
         }
 
-        /* TABELA DA ESCALA OTIMIZADA */
+        /* TABELA DA ESCALA OTIMIZADA - CORREÇÃO APLICADA */
         .table-wrapper {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
             border-radius: 12px;
@@ -410,6 +410,8 @@
             animation: tableFloat var(--animation-duration) ease-in-out infinite;
             position: relative;
             overflow-x: auto;
+            display: block;
+            width: 100%;
         }
 
         @keyframes tableFloat {
@@ -444,6 +446,7 @@
             letter-spacing: 1px;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             position: relative;
+            width: 100%;
         }
 
         .table-header::before {
@@ -472,11 +475,12 @@
             50% { transform: translateY(-2px); }
         }
 
+        /* CORREÇÃO DAS TABELAS - GARANTIR QUE AS CORES VÃO ATÉ O FINAL */
         table {
             width: 100%;
             border-collapse: collapse;
             position: relative;
-            min-width: 400px;
+            min-width: 600px; /* Garantir que a tabela tenha largura mínima para rolagem */
         }
 
         th {
@@ -491,6 +495,7 @@
             text-transform: uppercase;
             position: relative;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         th:hover {
@@ -524,6 +529,7 @@
             position: relative;
             vertical-align: middle;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         tr:nth-child(even) td {
@@ -945,7 +951,37 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
+        /* INDICADOR DE ROLAGEM HORIZONTAL */
+        .scroll-indicator {
+            text-align: center;
+            padding: 10px;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .scroll-indicator i {
+            margin-right: 5px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
         /* MEDIA QUERIES ADICIONAIS PARA MELHOR RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .scroll-indicator {
+                display: block;
+            }
+            
+            table {
+                min-width: 600px; /* Largura mínima para garantir rolagem horizontal */
+            }
+        }
+
         @media (max-width: 480px) {
             body {
                 padding: 5px;
@@ -1117,6 +1153,9 @@
             
             <!-- SEÇÃO ESCALA DE FUNÇÕES -->
             <div id="section-funcoes" class="section active">
+                <div class="scroll-indicator">
+                    <i class="fas fa-arrows-alt-h"></i> Deslize horizontalmente para ver mais informações
+                </div>
                 <div class="tables-container">
                     <div class="table-wrapper">
                         <div class="table-header">
@@ -1142,6 +1181,9 @@
 
             <!-- SEÇÃO JUSTIFICATIVAS -->
             <div id="section-justificativas" class="section">
+                <div class="scroll-indicator">
+                    <i class="fas fa-arrows-alt-h"></i> Deslize horizontalmente para ver mais informações
+                </div>
                 <div class="tables-container">
                     <div class="table-wrapper">
                         <div class="table-header">
