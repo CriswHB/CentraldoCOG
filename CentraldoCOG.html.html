@@ -480,7 +480,48 @@
             width: 100%;
             border-collapse: collapse;
             position: relative;
-            min-width: 600px; /* Garantir que a tabela tenha largura mínima para rolagem */
+            table-layout: fixed; /* Garantir que as colunas tenham larguras fixas */
+        }
+
+        /* LARGURAS ESPECÍFICAS PARA AS COLUNAS DAS JUSTIFICATIVAS */
+        #justificationsTable th:nth-child(1), /* Data/Hora */
+        #justificationsTable td:nth-child(1) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(2), /* Nickname */
+        #justificationsTable td:nth-child(2) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(3), /* Data da atividade */
+        #justificationsTable td:nth-child(3) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(4), /* Motivo - MENOR */
+        #justificationsTable td:nth-child(4) {
+            width: 40%;
+            max-width: 200px; /* Limitar a largura máxima */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* LARGURAS PARA A TABELA DE FUNÇÕES */
+        #functionsTable th:nth-child(1), /* Função */
+        #functionsTable td:nth-child(1) {
+            width: 40%;
+        }
+
+        #functionsTable th:nth-child(2), /* Nick */
+        #functionsTable td:nth-child(2) {
+            width: 30%;
+        }
+
+        #functionsTable th:nth-child(3), /* Prazo */
+        #functionsTable td:nth-child(3) {
+            width: 30%;
         }
 
         th {
@@ -530,6 +571,8 @@
             vertical-align: middle;
             font-size: 0.9rem;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         tr:nth-child(even) td {
@@ -980,6 +1023,28 @@
             table {
                 min-width: 600px; /* Largura mínima para garantir rolagem horizontal */
             }
+            
+            /* AJUSTES ESPECÍFICOS PARA TABELAS EM MOBILE */
+            #justificationsTable th:nth-child(1),
+            #justificationsTable td:nth-child(1) {
+                width: 25%;
+            }
+
+            #justificationsTable th:nth-child(2),
+            #justificationsTable td:nth-child(2) {
+                width: 25%;
+            }
+
+            #justificationsTable th:nth-child(3),
+            #justificationsTable td:nth-child(3) {
+                width: 25%;
+            }
+
+            #justificationsTable th:nth-child(4),
+            #justificationsTable td:nth-child(4) {
+                width: 25%;
+                max-width: 150px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1161,7 +1226,7 @@
                         <div class="table-header">
                             <i class="fas fa-tasks"></i> Escala de Funções
                         </div>
-                        <table>
+                        <table id="functionsTable">
                             <thead>
                                 <tr>
                                     <th>Função</th>
@@ -1189,7 +1254,7 @@
                         <div class="table-header">
                             <i class="fas fa-clipboard-check"></i> Justificativas
                         </div>
-                        <table>
+                        <table id="justificationsTable">
                             <thead>
                                 <tr>
                                     <th>Data/Hora</th>
@@ -1229,12 +1294,12 @@
                         
                         <div class="form-group">
                             <label for="transp-tema">Tema da Atividade:</label>
-                            <input type="text" id="transp-tema" placeholder="Digite o tema da atividade" value="Atividade....">
+                            <input type="text" id="transp-tema" placeholder="Digite o tema da atividade" value="Capacitação em Gestão de Crises">
                         </div>
                         
                         <div class="form-group">
                             <label for="transp-comentario">Comentário sobre a Atividade:</label>
-                            <textarea id="transp-comentario" placeholder="Descreva o funcionamento da atividade...">a Equipe do Corpo de Oficiais Generais realizou um treinamento....</textarea>
+                            <textarea id="transp-comentario" placeholder="Descreva o funcionamento da atividade...">a Equipe do Corpo de Oficiais Generais realizou um treinamento intensivo sobre gestão de crises, abordando técnicas de comunicação eficaz, tomada de decisão sob pressão e coordenação de equipes em situações de emergência. Os participantes tiveram a oportunidade de praticar em cenários simulados que replicavam situações reais de crise.</textarea>
                         </div>
                         
                         <div class="form-group">
@@ -1647,7 +1712,7 @@ A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todo
                             <td>${dataHora}</td>
                             <td>${nickname}</td>
                             <td>${dataAtividade}</td>
-                            <td>${motivo}</td>
+                            <td title="${motivo}">${motivo.length > 30 ? motivo.substring(0, 30) + '...' : motivo}</td>
                         `;
                         tableBody.appendChild(row);
                     }
@@ -1732,4 +1797,5 @@ A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todo
     </script>
 </body>
 </html>
+
 
