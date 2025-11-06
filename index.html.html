@@ -483,7 +483,7 @@
             min-width: 100%; /* GARANTIR QUE A TABELA OCUPE TODA A LARGURA */
         }
 
-        /* CORREÇÃO DAS CORES DOS CABEÇALHOS */
+        /* CORREÇÃO DAS CORES DOS CABEÇALHOS - AGORA APLICADA EM TODAS AS CÉLULAS */
         th {
             background: var(--header-gradient);
             color: white;
@@ -497,6 +497,25 @@
             position: relative;
             transition: all 0.3s ease;
             white-space: nowrap;
+        }
+
+        /* CORREÇÃO CRÍTICA: Garantir que o verde se estenda por toda a largura da tabela */
+        thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        tbody {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
         }
 
         th:hover {
@@ -535,9 +554,10 @@
             text-overflow: ellipsis;
         }
 
-        /* LARGURAS ESPECÍFICAS PARA AS TABELAS */
+        /* LARGURAS ESPECÍFICAS PARA AS TABELAS - CORRIGIDAS */
         #functionsTable {
             table-layout: fixed;
+            width: 100%;
         }
 
         #functionsTable th:nth-child(1),
@@ -557,6 +577,7 @@
 
         #justificationsTable {
             table-layout: fixed;
+            width: 100%;
         }
 
         #justificationsTable th:nth-child(1),
