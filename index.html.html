@@ -480,50 +480,10 @@
             width: 100%;
             border-collapse: collapse;
             position: relative;
-            table-layout: fixed; /* Garantir que as colunas tenham larguras fixas */
+            min-width: 100%; /* GARANTIR QUE A TABELA OCUPE TODA A LARGURA */
         }
 
-        /* LARGURAS ESPECÍFICAS PARA AS COLUNAS DAS JUSTIFICATIVAS */
-        #justificationsTable th:nth-child(1), /* Data/Hora */
-        #justificationsTable td:nth-child(1) {
-            width: 20%;
-        }
-
-        #justificationsTable th:nth-child(2), /* Nickname */
-        #justificationsTable td:nth-child(2) {
-            width: 20%;
-        }
-
-        #justificationsTable th:nth-child(3), /* Data da atividade */
-        #justificationsTable td:nth-child(3) {
-            width: 20%;
-        }
-
-        #justificationsTable th:nth-child(4), /* Motivo - MENOR */
-        #justificationsTable td:nth-child(4) {
-            width: 40%;
-            max-width: 200px; /* Limitar a largura máxima */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        /* LARGURAS PARA A TABELA DE FUNÇÕES */
-        #functionsTable th:nth-child(1), /* Função */
-        #functionsTable td:nth-child(1) {
-            width: 40%;
-        }
-
-        #functionsTable th:nth-child(2), /* Nick */
-        #functionsTable td:nth-child(2) {
-            width: 30%;
-        }
-
-        #functionsTable th:nth-child(3), /* Prazo */
-        #functionsTable td:nth-child(3) {
-            width: 30%;
-        }
-
+        /* CORREÇÃO DAS CORES DOS CABEÇALHOS */
         th {
             background: var(--header-gradient);
             color: white;
@@ -575,6 +535,50 @@
             text-overflow: ellipsis;
         }
 
+        /* LARGURAS ESPECÍFICAS PARA AS TABELAS */
+        #functionsTable {
+            table-layout: fixed;
+        }
+
+        #functionsTable th:nth-child(1),
+        #functionsTable td:nth-child(1) {
+            width: 40%;
+        }
+
+        #functionsTable th:nth-child(2),
+        #functionsTable td:nth-child(2) {
+            width: 30%;
+        }
+
+        #functionsTable th:nth-child(3),
+        #functionsTable td:nth-child(3) {
+            width: 30%;
+        }
+
+        #justificationsTable {
+            table-layout: fixed;
+        }
+
+        #justificationsTable th:nth-child(1),
+        #justificationsTable td:nth-child(1) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(2),
+        #justificationsTable td:nth-child(2) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(3),
+        #justificationsTable td:nth-child(3) {
+            width: 20%;
+        }
+
+        #justificationsTable th:nth-child(4),
+        #justificationsTable td:nth-child(4) {
+            width: 40%;
+        }
+
         tr:nth-child(even) td {
             background: rgba(248, 250, 252, 0.98);
         }
@@ -613,6 +617,53 @@
             box-shadow: none !important;
             margin: 0;
             line-height: 1.4;
+        }
+
+        /* TOOLTIP PARA JUSTIFICATIVAS */
+        .motivo-cell {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .motivo-cell .tooltip {
+            visibility: hidden;
+            width: 300px;
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+            line-height: 1.4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        .motivo-cell .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2c3e50 transparent transparent transparent;
+        }
+
+        .motivo-cell:hover .tooltip,
+        .motivo-cell:active .tooltip,
+        .motivo-cell:focus .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
 
         /* BOTÕES DE AÇÃO OTIMIZADOS */
@@ -1043,7 +1094,12 @@
             #justificationsTable th:nth-child(4),
             #justificationsTable td:nth-child(4) {
                 width: 25%;
-                max-width: 150px;
+            }
+            
+            /* TOOLTIP PARA MOBILE */
+            .motivo-cell .tooltip {
+                width: 250px;
+                font-size: 0.8rem;
             }
         }
 
@@ -1125,6 +1181,12 @@
                 padding: 15px;
                 font-size: 0.85rem;
             }
+            
+            /* TOOLTIP PARA CELULAR PEQUENO */
+            .motivo-cell .tooltip {
+                width: 200px;
+                font-size: 0.75rem;
+            }
         }
 
         @media (min-width: 768px) {
@@ -1177,6 +1239,13 @@
             
             tr:hover td {
                 transform: none;
+            }
+            
+            /* TOOLTIP PARA DISPOSITIVOS TOUCH */
+            .motivo-cell:active .tooltip,
+            .motivo-cell:focus .tooltip {
+                visibility: visible;
+                opacity: 1;
             }
         }
     </style>
@@ -1475,7 +1544,7 @@
 [table style="font-weight: 500; border-radius: 10px 10px 0px 0px; width: 100%; float: left; overflow: hidden;" bgcolor="#005600"]
 [tr][td style="overflow: hidden; padding: 0.5%"][color=#FFFFFF][size=16][b]ATIVIDADE OBRIGATÓRIA[/b][/size][/color][/td][/tr][/table]
 [table style="font-weight: 500; border-radius: 0px 0px 10px 10px; width: 100%; overflow: hidden;" bgcolor="#FFFFFF"]
-[tr][td style="overflow: hidden; padding: 1.5%"][justify]Cientes da importância de aprimorar a capacidade de resolução de problemas por meio de um raciocínio crítico e coerente, a [b][color=#005600]Equipe do Corpo de Oficiais Generais[/color][/b] promoverá uma atividade no dia [b][color=#005600]${date}[/color][/b] às [b][color=#005600]${hora}[/color][/b].
+[tr][td style="overflow: hidden; padding: 1.5%"][justify]Cientes da importância de aprimorar a capacidade de resolução de problemas por meio de um raicínio crítico e coerente, a [b][color=#005600]Equipe do Corpo de Oficiais Generais[/color][/b] promoverá uma atividade no dia [b][color=#005600]${date}[/color][/b] às [b][color=#005600]${hora}[/color][/b].
 
 A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todos os [b][color=#005600]tenentes[/color][/b], [b][color=#005600]capitães[/color][/b] e [b][color=#005600]coronéis[/color][/b], sendo a falta não justificada passível de advertência escrita por abandono de dever/negligência.
 
@@ -1712,7 +1781,10 @@ A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todo
                             <td>${dataHora}</td>
                             <td>${nickname}</td>
                             <td>${dataAtividade}</td>
-                            <td title="${motivo}">${motivo.length > 30 ? motivo.substring(0, 30) + '...' : motivo}</td>
+                            <td class="motivo-cell">
+                                ${motivo.length > 30 ? motivo.substring(0, 30) + '...' : motivo}
+                                <div class="tooltip">${motivo}</div>
+                            </td>
                         `;
                         tableBody.appendChild(row);
                     }
@@ -1797,4 +1869,3 @@ A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todo
     </script>
 </body>
 </html>
-
