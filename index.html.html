@@ -33,7 +33,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: #1a4d1a;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef, #f8f9fa);
             color: #333;
             overflow-x: hidden;
         }
@@ -62,7 +62,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ANIMAÇÃO MELHORADA - APENAS FAIXA VERDE TROPA E BRILHO SUAVE */
         .container::before {
             content: '';
             position: absolute;
@@ -77,7 +76,6 @@
             z-index: 1;
         }
 
-        /* FAIXA VERDE TROPA MELHORADA - AGORA COBERTA TODO O CONTAINER */
         .container::after {
             content: '';
             position: absolute;
@@ -113,7 +111,6 @@
             }
         }
 
-        /* BRILHO SUAVE NO FUNDO - AGORA COBRE TODO O CONTAINER */
         .shine-effect {
             position: absolute;
             top: 0;
@@ -145,7 +142,7 @@
             z-index: 2;
         }
 
-        /* HEADER - AGORA SEM BACKGROUND PRÓPRIO */
+        /* HEADER */
         header {
             padding: 25px;
             text-align: center;
@@ -155,7 +152,6 @@
             gap: 30px;
             position: relative;
             overflow: hidden;
-            /* Background removido - usa o do container */
         }
 
         .header-image {
@@ -247,65 +243,108 @@
         .content {
             padding: 40px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* BOTÕES DE NAVEGAÇÃO - MANTIDOS COMO ESTAVAM */
+        /* BOTÕES DE NAVEGAÇÃO */
         .navigation-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .nav-btn {
-            padding: 15px 30px;
-            background: var(--header-gradient);
+            padding: 18px 35px;
+            background: linear-gradient(135deg, #27ae60, #2d5a2d);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                0 0 15px rgba(39, 174, 96, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             animation: navBtnFloat var(--animation-duration) ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            justify-content: center;
         }
 
         @keyframes navBtnFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transition: left 0.7s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
         }
 
         .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(135deg, #2d5a2d, #1a4d1a);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 25px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(39, 174, 96, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #2d5a2d, #27ae60);
             animation: none;
         }
 
         .nav-btn.active {
-            background: linear-gradient(135deg, var(--accent), #1a4d1a);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #27ae60, #1a4d1a);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(39, 174, 96, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .nav-btn i {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
         }
 
         /* SEÇÕES */
         .section {
             display: none;
+            width: 100%;
         }
 
         .section.active {
             display: block;
         }
 
-        /* MÊS DESTACADO - VOLTANDO AO BRANCO ORIGINAL */
+        /* MÊS DESTACADO */
         .month-display {
             font-size: 2rem;
             color: #2c3e50;
@@ -320,6 +359,8 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
             border: 2px solid rgba(255, 255, 255, 0.8);
             animation: monthGlow var(--animation-duration) ease-in-out infinite;
+            width: 100%;
+            max-width: 600px;
         }
 
         @keyframes monthGlow {
@@ -355,9 +396,10 @@
             grid-template-columns: 1fr;
             gap: 30px;
             margin-top: 30px;
+            width: 100%;
         }
 
-        /* TABELA DA ESCALA - MANTENDO ORIGINAL */
+        /* TABELA DA ESCALA */
         .table-wrapper {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
             border-radius: 15px;
@@ -487,7 +529,6 @@
             background: rgba(248, 250, 252, 0.98);
         }
 
-        /* CORREÇÃO: TODO O TEXTO DA LINHA FICA VERDE NO HOVER */
         tr:hover td {
             background: linear-gradient(135deg, rgba(236, 240, 241, 0.9), rgba(228, 233, 237, 0.9));
             transform: translateX(3px);
@@ -502,14 +543,12 @@
             font-weight: 700;
         }
 
-        /* FUNÇÕES CENTRALIZADAS */
         .function-cell {
             color: #2c3e50;
             font-weight: 600;
             text-align: center;
         }
 
-        /* PRAZOS */
         .nickname, .deadline {
             color: #2c3e50;
             font-weight: 600;
@@ -526,14 +565,14 @@
             line-height: 1.4;
         }
 
-        /* BOTÕES DE AÇÃO UNIFICADOS */
+        /* BOTÕES DE AÇÃO */
         .action-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
             margin: 40px 0 20px 0;
             flex-wrap: wrap;
             align-items: center;
+            width: 100%;
         }
 
         .action-btn {
@@ -636,24 +675,27 @@
         #linksContent.show {
             max-height: 500px;
             padding: 25px;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .links-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
+            width: 100%;
         }
 
         .link-card {
-            background: rgba(245, 247, 250, 0.95);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-radius: 12px;
             padding: 20px;
             box-shadow: 
                 0 5px 15px rgba(0, 0, 0, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(220, 220, 220, 0.8);
             display: flex;
             align-items: center;
         }
@@ -663,14 +705,14 @@
             box-shadow: 
                 0 10px 25px rgba(0, 0, 0, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.98);
+            border-color: #c0c0c0;
+            background: linear-gradient(135deg, #ffffff, #f5f5f5);
         }
 
         .link-icon {
             width: 45px;
             height: 45px;
-            background: var(--header-gradient);
+            background: linear-gradient(135deg, #6c757d, #495057);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -684,6 +726,7 @@
 
         .link-card:hover .link-icon {
             transform: scale(1.1);
+            background: linear-gradient(135deg, #5a6268, #3d4348);
         }
 
         .link-content h3 {
@@ -702,7 +745,7 @@
         }
 
         .link-content a:hover {
-            color: var(--accent);
+            color: #2c3e50;
             text-decoration: underline;
         }
 
@@ -713,7 +756,175 @@
             font-weight: 600;
         }
 
-        /* FOOTER - AGORA SEM BACKGROUND PRÓPRIO */
+        /* GERADORES DE BBCODE - DESIGN MELHORADO */
+        .bbcode-generator {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                0 0 0 1px rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            width: 100%;
+            border: 1px solid rgba(39, 174, 96, 0.2);
+        }
+
+        .bbcode-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .bbcode-tab {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #495057;
+            flex: 1;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .bbcode-tab.active {
+            background: linear-gradient(135deg, #27ae60, #2d5a2d);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: #1a4d1a;
+        }
+
+        .bbcode-tab:hover:not(.active) {
+            background: linear-gradient(135deg, #d4d8dc, #c8ccd1);
+            transform: translateY(-2px);
+            border-color: #adb5bd;
+        }
+
+        .bbcode-form {
+            display: none;
+        }
+
+        .bbcode-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e9ecef;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+            background: white;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .destaques-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .destaque-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .destaque-input input {
+            flex: 1;
+        }
+
+        .preview-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .preview-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .bbcode-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            background: #f8f9fa;
+            border-left: 4px solid #27ae60;
+        }
+
+        .copy-button {
+            background: linear-gradient(135deg, #27ae60, #2d5a2d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+            border: 2px solid #1a4d1a;
+        }
+
+        .copy-button:hover {
+            background: linear-gradient(135deg, #219653, #1a4d1a);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .copy-button:active {
+            transform: translateY(0);
+        }
+
+        /* FOOTER */
         footer {
             padding: 25px;
             text-align: center;
@@ -721,7 +932,7 @@
             font-weight: 600;
             color: white;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            /* Background removido - usa o do container */
+            width: 100%;
         }
 
         .credits {
@@ -777,11 +988,12 @@
             .nav-btn {
                 width: 100%;
                 max-width: 300px;
+                padding: 15px 25px;
+                font-size: 1.1rem;
             }
 
-            .action-buttons {
+            .bbcode-tabs {
                 flex-direction: column;
-                gap: 15px;
             }
         }
     </style>
@@ -816,12 +1028,12 @@
                 </button>
             </div>
 
-            <!-- MÊS DESTACADO - VOLTANDO AO BRANCO ORIGINAL -->
+            <!-- MÊS DESTACADO -->
             <div class="month-display">
                 <i class="far fa-calendar-alt"></i> <span id="monthDisplay">Carregando mês...</span>
             </div>
             
-            <!-- SEÇÃO ESCALA DE FUNÇÕES - MANTIDA ORIGINAL -->
+            <!-- SEÇÃO ESCALA DE FUNÇÕES -->
             <div id="section-funcoes" class="section active">
                 <div class="tables-container">
                     <div class="table-wrapper">
@@ -846,7 +1058,7 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO JUSTIFICATIVAS - MANTIDA ORIGINAL -->
+            <!-- SEÇÃO JUSTIFICATIVAS -->
             <div id="section-justificativas" class="section">
                 <div class="tables-container">
                     <div class="table-wrapper">
@@ -872,16 +1084,77 @@
                 </div>
             </div>
 
-            <!-- SEÇÃO BBCODES - MANTIDA ORIGINAL -->
+            <!-- SEÇÃO BBCODES - COM GERADORES MELHORADOS -->
             <div id="section-bbcodes" class="section">
-                <div class="tables-container">
-                    <div class="table-wrapper">
-                        <div class="table-header">
-                            <i class="fas fa-code"></i> BBCodes
+                <div class="bbcode-generator">
+                    <div class="bbcode-tabs">
+                        <button class="bbcode-tab active" onclick="showBBCodeTab('transparencia')">
+                            <i class="fas fa-eye"></i> Transparência
+                        </button>
+                        <button class="bbcode-tab" onclick="showBBCodeTab('atividade')">
+                            <i class="fas fa-calendar-check"></i> Atividade
+                        </button>
+                    </div>
+
+                    <!-- FORMULÁRIO DE TRANSPARÊNCIA MELHORADO -->
+                    <div id="transparencia-form" class="bbcode-form active">
+                        <div class="form-group">
+                            <label for="transp-date">Data da Atividade:</label>
+                            <input type="text" id="transp-date" placeholder="DD MMM AAAA" value="29 Out 2025">
                         </div>
-                        <div class="loading" style="padding: 40px;">
-                            <i class="fas fa-code" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i><br>
-                            Biblioteca de BBCodes para fórum
+                        
+                        <div class="form-group">
+                            <label for="transp-tema">Tema da Atividade:</label>
+                            <input type="text" id="transp-tema" placeholder="Digite o tema da atividade" value="Capacitação em Gestão de Crises">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="transp-comentario">Comentário sobre a Atividade:</label>
+                            <textarea id="transp-comentario" placeholder="Descreva o funcionamento da atividade...">a Equipe do Corpo de Oficiais Generais realizou um treinamento intensivo sobre gestão de crises, abordando técnicas de comunicação eficaz, tomada de decisão sob pressão e coordenação de equipes em situações de emergência. Os participantes tiveram a oportunidade de praticar em cenários simulados que replicavam situações reais de crise.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Destaques da Atividade:</label>
+                            <div class="destaques-container" id="transp-destaques">
+                                <div class="destaque-input">
+                                    <input type="text" placeholder="Nome do destaque" value="Capitão Silva" class="destaque-input-field">
+                                </div>
+                                <div class="destaque-input">
+                                    <input type="text" placeholder="Nome do destaque" value="Tenente Oliveira" class="destaque-input-field">
+                                </div>
+                                <div class="destaque-input">
+                                    <input type="text" placeholder="Nome do destaque" value="Coronel Santos" class="destaque-input-field">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-container">
+                            <div class="preview-title">Pré-visualização do BBCode</div>
+                            <div class="bbcode-preview" id="transp-preview"></div>
+                            <button class="copy-button" onclick="copyBBCode('transp-preview')">
+                                <i class="fas fa-copy"></i> Copiar BBCode
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- FORMULÁRIO DE ATIVIDADE MELHORADO -->
+                    <div id="atividade-form" class="bbcode-form">
+                        <div class="form-group">
+                            <label for="atividade-date">Data da Atividade:</label>
+                            <input type="text" id="atividade-date" placeholder="DD MMM AAAA" value="29 Outubro 2025">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="atividade-hora">Horário da Atividade:</label>
+                            <input type="text" id="atividade-hora" placeholder="HH:MMBR" value="21h00BR">
+                        </div>
+
+                        <div class="preview-container">
+                            <div class="preview-title">Pré-visualização do BBCode</div>
+                            <div class="bbcode-preview" id="atividade-preview"></div>
+                            <button class="copy-button" onclick="copyBBCode('atividade-preview')">
+                                <i class="fas fa-copy"></i> Copiar BBCode
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -889,12 +1162,6 @@
             
             <!-- BOTÕES DE AÇÃO -->
             <div class="action-buttons">
-                <button class="action-btn" onclick="openForm('postagem')">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="action-btn" onclick="openForm('justificativa')">
-                    <i class="fas fa-file-alt"></i>
-                </button>
                 <button class="action-btn" onclick="toggleLinks()">
                     <i class="fas fa-link"></i>
                 </button>
@@ -908,7 +1175,7 @@
             </div>
         </div>
         
-        <!-- RODAPÉ UNIFICADO -->
+        <!-- RODAPÉ -->
         <footer>
             <p class="credits">&lt;/&gt; Desenvolvido por Crisw inspirado no html de Pegas</p>
         </footer>
@@ -941,20 +1208,146 @@
             // Carregar dados específicos da seção se necessário
             if (section === 'justificativas') {
                 loadJustifications();
+            } else if (section === 'bbcodes') {
+                updateTransparenciaBBCode();
+                updateAtividadeBBCode();
             }
         }
 
-        // Função para abrir formulários
-        function openForm(type) {
-            if (type === 'postagem') {
-                alert('Abrindo formulário de postagem...');
-                // window.open('URL_DO_FORMULARIO_DE_POSTAGEM', '_blank');
-            } else if (type === 'justificativa') {
-                alert('Abrindo formulário de justificativa...');
-                // window.open('URL_DO_FORMULARIO_DE_JUSTIFICATIVA', '_blank');
-            }
+        // Função para mostrar aba do BBCode
+        function showBBCodeTab(tabName) {
+            // Remover classe active de todas as abas
+            document.querySelectorAll('.bbcode-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os formulários
+            document.querySelectorAll('.bbcode-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Ativar aba selecionada
+            event.target.classList.add('active');
+            
+            // Mostrar formulário selecionado
+            document.getElementById(`${tabName}-form`).classList.add('active');
         }
 
+        // Função para atualizar BBCode de Transparência - CORRIGIDA
+        function updateTransparenciaBBCode() {
+            const date = document.getElementById('transp-date').value || 'DD MMM AAAA';
+            const tema = document.getElementById('transp-tema').value || 'COLOQUE O TEMA AQUI';
+            const comentario = document.getElementById('transp-comentario').value || '{DISSERTE SOBRE O FUNCIONAMENTO DA ATIVIDADE}';
+            
+            // Coletar destaques - CORREÇÃO: Usar os valores dos inputs
+            const destaques = [];
+            document.querySelectorAll('#transp-destaques .destaque-input-field').forEach(input => {
+                if (input.value.trim()) {
+                    destaques.push(input.value.trim());
+                }
+            });
+            
+            // Gerar lista de destaques - CORREÇÃO: Formato correto
+            let destaquesText = '';
+            if (destaques.length > 0) {
+                destaquesText = destaques.map(destaque => 
+                    `[img(15px,16px)]https://i.imgur.com/Lfqccvs.png[/img] ${destaque}`
+                ).join('\n');
+            } else {
+                destaquesText = '[img(15px,16px)]https://i.imgur.com/Lfqccvs.png[/img] DESTAQUE 1\n[img(15px,16px)]https://i.imgur.com/Lfqccvs.png[/img] DESTAQUE 2\n[img(15px,16px)]https://i.imgur.com/Lfqccvs.png[/img] DESTAQUE 3';
+            }
+
+            const bbcode = `[table style="border-color: black; border-radius: 15px; overflow: hidden; width: 100%;" bgcolor="174527"][tr][td][table style="border-color: black; border-radius: 15px; overflow: hidden; width: 100%;" bgcolor="#ffffff"][tr][td][img]https://i.imgur.com/7suYBZs.png[/img]
+
+[table style="border-radius: 15px; overflow: hidden; width: 100%" bgcolor="174527"][tr][td][color=#ffffff][b][font=Poppins][size=20]TRANSPARÊNCIA - ATIVIDADE[/size][/font][/b][/color][/td][/tr][/table]
+
+[font=Poppins]Saudações, [b]{USERNAME}[/b]!
+
+[justify]No dia [b]${date}[/b], a [b]Equipe do Corpo de Oficiais Generais[/b] realizou a sua atividade quinzenal com o tema [b]${tema}[/b]. Nessa atividade, ${comentario}[/justify]
+
+[table class="rank" style="border: none!important; margin: 0em; color: black; font-weight: 400; line-height: 1.4em;" bgcolor="white"][tr style="border: none;"][td style="border: none!important;"][b][size=14][color=#174527]Os seguintes policiais foram destaques na atividade quinzenal do Corpo de Oficiais:[/color][/size][/b]
+
+[justify]${destaquesText}[/justify][/td][/tr][/table][/font][/td][/tr][/table]
+
+[font=Poppins][size=10][b][color=#ffffff]Em caso de dúvidas, entre em contato com um membro da Equipe do Corpo de Oficiais Generais[/color][/b][/size][/font][/td][/tr][/table]
+
+[center][img]https://i36.servimg.com/u/f36/19/81/06/25/div_cd10.png[/img][/center]`;
+
+            document.getElementById('transp-preview').textContent = bbcode;
+        }
+
+        // Função para atualizar BBCode de Atividade
+        function updateAtividadeBBCode() {
+            const date = document.getElementById('atividade-date').value || '29 Outubro 2025';
+            const hora = document.getElementById('atividade-hora').value || '21h00BR';
+
+            const bbcode = `[table style="font-weight: 500; border-radius: 10px; width: 100%; overflow: hidden;" bgcolor="#121212"]
+[tr][td style="overflow: hidden; padding: 1%"][img]https://2img.net/i.imgur.com/7suYBZs.png[/img]
+[table style="font-weight: 500; border-radius: 10px 10px 0px 0px; width: 100%; float: left; overflow: hidden;" bgcolor="#005600"]
+[tr][td style="overflow: hidden; padding: 0.5%"][color=#FFFFFF][size=16][b]ATIVIDADE OBRIGATÓRIA[/b][/size][/color][/td][/tr][/table]
+[table style="font-weight: 500; border-radius: 0px 0px 10px 10px; width: 100%; overflow: hidden;" bgcolor="#FFFFFF"]
+[tr][td style="overflow: hidden; padding: 1.5%"][justify]Cientes da importância de aprimorar a capacidade de resolução de problemas por meio de um raciocínio crítico e coerente, a [b][color=#005600]Equipe do Corpo de Oficiais Generais[/color][/b] promoverá uma atividade no dia [b][color=#005600]${date}[/color][/b] às [b][color=#005600]${hora}[/color][/b].
+
+A presença na atividade é [b][color=#005600]OBRIGATÓRIA[/color][/b] para todos os [b][color=#005600]tenentes[/color][/b], [b][color=#005600]capitães[/color][/b] e [b][color=#005600]coronéis[/color][/b], sendo a falta não justificada passível de advertência escrita por abandono de dever/negligência.
+
+[table style="box-shadow: 0 0 0 1px #005600; font-weight: 500; border-radius: 15px; width: 100%; overflow: hidden; margin: 0 auto;"]
+[tr][td style="overflow: hidden; padding: 2%;" bgcolor="#F5F5F5"]Em caso de indisponibilidade, deverá apresentar uma justificativa, [b][color=#005600]no prazo de até 24 horas após o início da atividade[/color][/b], por meio do formulário disponibilizado abaixo:
+
+[table style="box-shadow: 0 0 0 1px #005600; border-radius: 10px; width: 60%; overflow: hidden; margin: 0 auto;"]
+[tr][td style="overflow: hidden; padding: 0.4%; width: 15%;" bgcolor="#005600"][url=https://docs.google.com/forms/d/e/1FAIpQLSdw4Yt9skrzqxXBhM0OMj4n1bXgyM1Kdzqwv7AycJRyUu6DVw/viewform][img(50px,50px)]https://2img.net/i.imgur.com/dnTQDPh.png[/img][/url][/td]
+[td style="overflow: hidden; padding: 0.8%; width: 35%;" bgcolor="#FFFFFF"][url=https://docs.google.com/forms/d/e/1FAIpQLSdw4Yt9skrzqxXBhM0OMj4n1bXgyM1Kdzqwv7AycJRyUu6DVw/viewform][color=#005600][b]FORMULÁRIO DE JUSTIFICATIVA[/b]
+[size=11]Clique aqui para registrar a sua justificativa.[/size][/color][/url][/td][/tr][/table][/td][/tr][/table]
+[center][b][color=#005600]{USERNAME}[/color][/b], contamos com a sua presença![/center][/justify][/td][/tr][/table][/td][/tr][/table]`;
+
+            document.getElementById('atividade-preview').textContent = bbcode;
+        }
+
+        // Função para copiar BBCode
+        function copyBBCode(previewId) {
+            const preview = document.getElementById(previewId);
+            const textArea = document.createElement('textarea');
+            textArea.value = preview.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Feedback visual
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> BBCode Copiado!';
+            button.style.background = 'linear-gradient(135deg, #219653, #1a4d1a)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'linear-gradient(135deg, #27ae60, #2d5a2d)';
+            }, 2000);
+        }
+
+        // Configurar event listeners para atualização automática
+        document.addEventListener('DOMContentLoaded', function() {
+            // Transparência
+            document.getElementById('transp-date').addEventListener('input', updateTransparenciaBBCode);
+            document.getElementById('transp-tema').addEventListener('input', updateTransparenciaBBCode);
+            document.getElementById('transp-comentario').addEventListener('input', updateTransparenciaBBCode);
+            
+            // CORREÇÃO: Adicionar event listeners para os campos de destaques
+            document.querySelectorAll('#transp-destaques .destaque-input-field').forEach(input => {
+                input.addEventListener('input', updateTransparenciaBBCode);
+            });
+            
+            // Atividade
+            document.getElementById('atividade-date').addEventListener('input', updateAtividadeBBCode);
+            document.getElementById('atividade-hora').addEventListener('input', updateAtividadeBBCode);
+            
+            // Inicializar BBCodes
+            updateTransparenciaBBCode();
+            updateAtividadeBBCode();
+        });
+
+        // Restante do código JavaScript permanece igual...
+        // (As funções fetchSheetData, loadJustifications, updateFunctionsTable, etc.)
+        
         // Função para buscar dados da planilha principal
         async function fetchSheetData() {
             try {
@@ -978,33 +1371,80 @@
                 const deadlinesResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/H13:H21?key=${API_KEY}`);
                 const deadlinesData = await deadlinesResponse.json();
 
-                // Buscar textos e links dos cards
-                const linkNamesBResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/B13:B17?key=${API_KEY}`);
-                const linkNamesBData = await linkNamesBResponse.json();
-
-                const linkUrlsBResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/B14:B18?key=${API_KEY}`);
-                const linkUrlsBData = await linkUrlsBResponse.json();
-
-                const linkNamesKResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/K13:K17?key=${API_KEY}`);
-                const linkNamesKData = await linkNamesKResponse.json();
-
-                const linkUrlsKResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/K14:K18?key=${API_KEY}`);
-                const linkUrlsKData = await linkUrlsKResponse.json();
-
                 // Processar e exibir os dados
                 updateFunctionsTable(functionsData.values || [], nicksData.values || [], deadlinesData.values || []);
-                updateLinks(
-                    linkNamesBData.values || [], 
-                    linkUrlsBData.values || [],
-                    linkNamesKData.values || [],
-                    linkUrlsKData.values || []
-                );
+                
+                // Buscar links específicos da planilha
+                await fetchAndUpdateLinks();
                 
             } catch (error) {
                 console.error('Erro ao buscar dados da planilha:', error);
                 document.getElementById('functionsTableBody').innerHTML = '<tr><td colspan="3" class="loading">Erro ao carregar dados</td></tr>';
                 document.getElementById('linksGrid').innerHTML = '<div class="loading">Erro ao carregar links</div>';
             }
+        }
+
+        // Função específica para buscar e atualizar links
+        async function fetchAndUpdateLinks() {
+            try {
+                // Buscar dados das células específicas dos links
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/A1:Z50?key=${API_KEY}`);
+                const data = await response.json();
+
+                if (!data.values) {
+                    console.log('Nenhum dado encontrado na planilha');
+                    return;
+                }
+
+                console.log('Dados completos da planilha:', data.values);
+
+                // Buscar os links específicos
+                const links = [
+                    { 
+                        title: getCellValue(data.values, 'B13') || 'Drive de Questões', 
+                        url: getCellValue(data.values, 'B14') || 'https://drive.google.com/drive/folders/1ABC123' 
+                    },
+                    { 
+                        title: getCellValue(data.values, 'B16') || 'Registro de Atividades', 
+                        url: getCellValue(data.values, 'B17') || 'https://docs.google.com/forms/d/1XYZ789' 
+                    },
+                    { 
+                        title: getCellValue(data.values, 'K13') || 'Postagem no Fórum', 
+                        url: getCellValue(data.values, 'K14') || 'https://forum.exemplo.com/nova-postagem' 
+                    },
+                    { 
+                        title: getCellValue(data.values, 'K16') || 'Comunicação', 
+                        url: getCellValue(data.values, 'K17') || 'https://discord.gg/linkdocanal' 
+                    }
+                ];
+
+                console.log('Links processados:', links);
+                updateLinksGrid(links);
+
+            } catch (error) {
+                console.error('Erro ao buscar links:', error);
+                // Usar links padrão como fallback
+                const defaultLinks = [
+                    { title: 'Drive de Questões', url: 'https://drive.google.com/drive/folders/1ABC123' },
+                    { title: 'Registro de Atividades', url: 'https://docs.google.com/forms/d/1XYZ789' },
+                    { title: 'Postagem no Fórum', url: 'https://forum.exemplo.com/nova-postagem' },
+                    { title: 'Comunicação', url: 'https://discord.gg/linkdocanal' }
+                ];
+                updateLinksGrid(defaultLinks);
+            }
+        }
+
+        // Função auxiliar para obter valor de célula
+        function getCellValue(data, cell) {
+            const column = cell.charAt(0);
+            const row = parseInt(cell.substring(1)) - 1; // -1 porque arrays começam em 0
+            
+            const columnIndex = column.charCodeAt(0) - 65; // A=0, B=1, etc
+            
+            if (data[row] && data[row][columnIndex]) {
+                return data[row][columnIndex];
+            }
+            return null;
         }
 
         // Função para carregar justificativas
@@ -1096,67 +1536,46 @@
         }
 
         // Função para atualizar os links úteis
-        function updateLinks(namesB, urlsB, namesK, urlsK) {
+        function updateLinksGrid(links) {
             const linksGrid = document.getElementById('linksGrid');
             linksGrid.innerHTML = '';
 
-            // Estrutura dos links:
-            // Card 1: B13 (texto), B14 (url)
-            // Card 2: B16 (texto), B17 (url)
-            // Card 3: K13 (texto), K14 (url)
-            // Card 4: K16 (texto), K17 (url)
-
-            const links = [
-                { 
-                    name: namesB[0] && namesB[0][0] ? namesB[0][0] : 'Documentação', 
-                    url: urlsB[0] && urlsB[0][0] ? urlsB[0][0] : '' 
-                },
-                { 
-                    name: namesB[3] && namesB[3][0] ? namesB[3][0] : 'Repositório', 
-                    url: urlsB[3] && urlsB[3][0] ? urlsB[3][0] : '' 
-                },
-                { 
-                    name: namesK[0] && namesK[0][0] ? namesK[0][0] : 'Calendário', 
-                    url: urlsK[0] && urlsK[0][0] ? urlsK[0][0] : '' 
-                },
-                { 
-                    name: namesK[3] && namesK[3][0] ? namesK[3][0] : 'Comunicação', 
-                    url: urlsK[3] && urlsK[3][0] ? urlsK[3][0] : '' 
-                }
+            // ÍCONES CORRIGIDOS - específicos para cada tipo de link
+            const icons = [
+                'fa-hdd',           // Drive de Questões - ícone de HD/disco
+                'fa-clipboard-list', // Registro de Atividades - ícone de lista/clipboard
+                'fa-edit',          // Postagem no Fórum - ícone de editar/postagem
+                'fa-comments'       // Comunicação - ícone de comentários
             ];
-
-            const icons = ['fa-book', 'fa-github', 'fa-calendar', 'fa-comments'];
+            
             let validLinksCount = 0;
 
             links.forEach((link, index) => {
-                if (link.url && link.url.trim() !== '' && link.name && link.name.trim() !== '') {
+                if (link.url && link.url.trim() !== '' && link.title && link.title.trim() !== '') {
                     const linkCard = document.createElement('div');
                     linkCard.className = 'link-card';
-                    
-                    let displayUrl = link.url;
-                    try {
-                        displayUrl = new URL(link.url).hostname;
-                    } catch (e) {
-                        // Se não for uma URL válida, mostra o texto completo
-                        displayUrl = link.url.length > 30 ? link.url.substring(0, 30) + '...' : link.url;
-                    }
                     
                     linkCard.innerHTML = `
                         <div class="link-icon">
                             <i class="fas ${icons[index]}"></i>
                         </div>
                         <div class="link-content">
-                            <h3>${link.name}</h3>
-                            <a href="${link.url}" target="_blank">${displayUrl}</a>
+                            <h3>${link.title}</h3>
+                            <a href="${link.url}" target="_blank">Acesse aqui</a>
                         </div>
                     `;
                     linksGrid.appendChild(linkCard);
                     validLinksCount++;
+                    
+                    console.log(`Link ${index + 1} criado:`, link);
                 }
             });
 
             if (validLinksCount === 0) {
                 linksGrid.innerHTML = '<div class="loading">Nenhum link útil disponível</div>';
+                console.log('Nenhum link válido encontrado');
+            } else {
+                console.log(`${validLinksCount} links criados com sucesso`);
             }
         }
 
@@ -1192,4 +1611,5 @@
     </script>
 </body>
 </html>
+
 
